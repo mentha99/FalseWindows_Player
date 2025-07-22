@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>False Windows Player</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <video id="videoA" autoplay loop muted playsinline>
+        <source id="sourceA" src="" type="video/mp4">
+    </video>
+
+    <video id="videoB" muted playsinline style="display: none">
+        <source id="sourceB" src="" type="video/mp4">
+    </video>
+
+    <div id="overlay"></div>
+
+    <a href="index.html"
+        style="position: absolute; top: 20px; left: 20px; color: #323232; font-size: 1.5em; z-index: 10;">← Back</a>
+
+    <script>
+        // 读取 URL 参数
+        function getSceneName() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('scene') || 'hanging';
+        }
+
+        const scene = getSceneName();
+        const videoA = document.getElementById('videoA');
+        const videoB = document.getElementById('videoB');
+        const sourceA = document.getElementById('sourceA');
+        const sourceB = document.getElementById('sourceB');
+        const overlay = document.getElementById('overlay');
+
+        // 设置视频路径
+        sourceA.src = `video/${scene}_OFF.mov`;
+        sourceB.src = `video/${scene}_ON.mov`;
+
+        // 重新加载 videoA/B
+        videoA.load();
+        videoB.load();
+
+        function triggerB() {
+            overlay.style.display = 'none';
+            videoA.loop = false;
+            const onEnded = () => {
+                videoA.removeEventListener('ended', onEnded);
+                videoA.style.display = 'none';
+                videoB.style.display = 'block';
+                videoB.currentTime = 0;
+                videoB.play();
+            };
+            videoA.addEventListener('ended', onEnded);
+        }
+
+        function returnToA() {
+            videoB.pause();
+            videoB.style.display = 'none';
+            videoA.loop = true;
+            videoA.style.display = 'block';
+            videoA.play();
+            overlay.style.display = 'block';
+        }
+
+        overlay.addEventListener('click', triggerB);
+        videoB.addEventListener('ended', returnToA);
+    </script>
+</body>
+
+</html>

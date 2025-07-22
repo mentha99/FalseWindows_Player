@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <title>False Windows Player</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-
     <!-- ✅ 告诉 iOS：我是 web app -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -14,61 +12,38 @@
 
     <!-- ✅ 添加 PWA manifest -->
     <link rel="manifest" href="manifest.json">
-    <!-- <link rel="apple-touch-icon" href="icon.png"> -->
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <style>
+        body {
+            margin: 0;
+            background: black;
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        a {
+            padding: 20px;
+            margin: 10px;
+            font-size: 2em;
+            color: white;
+            text-decoration: none;
+            border: 2px solid white;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    <video id="videoA" autoplay loop muted playsinline>
-        <source src="hanging_OFF.mov" type="video/mp4">
-    </video>
-
-    <video id="videoB" muted playsinline style="display: none">
-        <source src="hanging_ON.mov" type="video/mp4">
-    </video>
-
-    <div id="overlay">Tap to trigger</div>
-
-    <script>
-        const videoA = document.getElementById('videoA');
-        const videoB = document.getElementById('videoB');
-        const overlay = document.getElementById('overlay');
-
-        function triggerB() {
-            // prevent multiple clicks
-            overlay.style.display = 'none';
-
-            // Don't interrupt videoA immediately — wait for this loop to finish
-            // Turn off automatic looping
-            videoA.loop = false;
-
-            // Add a one-time listener to run after current loop ends
-            const onEnded = () => {
-                videoA.removeEventListener('ended', onEnded); // clean up
-
-                // Switch to B
-                videoA.style.display = 'none';
-                videoB.style.display = 'block';
-                videoB.currentTime = 0;
-                videoB.play();
-            };
-
-            videoA.addEventListener('ended', onEnded);
-        }
-
-        function returnToA() {
-            videoB.pause();
-            videoB.style.display = 'none';
-            videoA.loop = true;
-
-            videoA.style.display = 'block';
-            videoA.play();
-
-            overlay.style.display = 'block';
-        }
-
-        overlay.addEventListener('click', triggerB);
-        videoB.addEventListener('ended', returnToA);
-    </script>
+    <a href="player.html?scene=hanging">Hanging 万国旗</a>
+    <a href="player.html?scene=cooking">Cooking 排骨年糕</a>
+    <!-- Add more scenes as needed -->
 </body>
 
 </html>
