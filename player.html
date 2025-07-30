@@ -19,8 +19,8 @@
 
     <div id="overlay"></div>
 
-    <a href="index.html"
-        style="position: absolute; top: 20px; left: 20px; color: #323232; font-size: 1.5em; z-index: 10;">← Back</a>
+    <a href="index.html" id="backButton" class="fixed-button">← Back</a>
+    <a id="hideButton" class="fixed-button">Hide</a>
 
     <script>
         // 读取 URL 参数
@@ -68,6 +68,31 @@
 
         overlay.addEventListener('click', triggerB);
         videoB.addEventListener('ended', returnToA);
+
+        const hideButton = document.getElementById('hideButton');
+
+        // 按住时隐藏视频
+        hideButton.addEventListener('mousedown', () => {
+            videoA.style.visibility = 'hidden';
+            videoB.style.visibility = 'hidden';
+        });
+
+        // 松开时恢复显示
+        hideButton.addEventListener('mouseup', () => {
+            videoA.style.visibility = 'visible';
+            videoB.style.visibility = 'visible';
+        });
+
+        // 如果需要支持移动端触摸操作，也加上 touch 事件
+        hideButton.addEventListener('touchstart', () => {
+            videoA.style.visibility = 'hidden';
+            videoB.style.visibility = 'hidden';
+        });
+
+        hideButton.addEventListener('touchend', () => {
+            videoA.style.visibility = 'visible';
+            videoB.style.visibility = 'visible';
+        });
     </script>
 </body>
 
