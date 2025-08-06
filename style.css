@@ -32,6 +32,7 @@ video {
   cursor: pointer;
   z-index: 10;
 }
+
 /* #overlay {
   position: absolute;
   top: 0;
@@ -45,13 +46,17 @@ video {
 
 /* 固定按钮通用样式 */
 .fixed-button {
+  color: #2a2a2a;
   position: fixed;
   top: 20px;
-  color: #323232;
   font-size: 1.5em;
   z-index: 20;
   text-decoration: none;
   cursor: pointer;
+  /* ✅ 阻止文本被选中 */
+  user-select: none;
+  /* 兼容 iOS Safari */
+  -webkit-user-select: none;
 }
 
 /* 左上角返回按钮 */
@@ -60,15 +65,11 @@ video {
 }
 
 /* 右上角隐藏按钮 */
-#hideButton {
+.hide-button {
   position: absolute;
   top: calc(50% - 10vw - 2em);
   /* 距离视频底部 20px */
   left: 50%;
   transform: translateX(-50%);
   color: #121212;
-  font-size: 1.5em;
-  z-index: 20;
-  text-decoration: none;
-  cursor: pointer;
 }

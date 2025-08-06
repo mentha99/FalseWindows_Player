@@ -20,7 +20,9 @@
     <div id="overlay"></div>
 
     <a href="index.html" id="backButton" class="fixed-button">← Back</a>
-    <a id="hideButton" class="fixed-button">Hide</a>
+    <a class="hide-button fixed-button">Hide</a>
+    <a class="hide-button fixed-button" style="top: calc(50% + 10vw);">Hide</a>
+
 
     <script>
         // 读取 URL 参数
@@ -69,29 +71,25 @@
         overlay.addEventListener('click', triggerB);
         videoB.addEventListener('ended', returnToA);
 
-        const hideButton = document.getElementById('hideButton');
+        const hideButtons = document.querySelectorAll('.hide-button');
 
-        // 按住时隐藏视频
-        hideButton.addEventListener('mousedown', () => {
-            videoA.style.visibility = 'hidden';
-            videoB.style.visibility = 'hidden';
-        });
-
-        // 松开时恢复显示
-        hideButton.addEventListener('mouseup', () => {
-            videoA.style.visibility = 'visible';
-            videoB.style.visibility = 'visible';
-        });
-
-        // 如果需要支持移动端触摸操作，也加上 touch 事件
-        hideButton.addEventListener('touchstart', () => {
-            videoA.style.visibility = 'hidden';
-            videoB.style.visibility = 'hidden';
-        });
-
-        hideButton.addEventListener('touchend', () => {
-            videoA.style.visibility = 'visible';
-            videoB.style.visibility = 'visible';
+        hideButtons.forEach((btn) => {
+            btn.addEventListener('mousedown', () => {
+                videoA.style.visibility = 'hidden';
+                videoB.style.visibility = 'hidden';
+            });
+            btn.addEventListener('touchstart', () => {
+                videoA.style.visibility = 'hidden';
+                videoB.style.visibility = 'hidden';
+            });
+            btn.addEventListener('mouseup', () => {
+                videoA.style.visibility = 'visible';
+                videoB.style.visibility = 'visible';
+            });
+            btn.addEventListener('touchend', () => {
+                videoA.style.visibility = 'visible';
+                videoB.style.visibility = 'visible';
+            });
         });
     </script>
 </body>
